@@ -37,7 +37,7 @@ read push
 if [ $push = "y" ]; then 
     git add $ADD_PATTERN
     git commit -m "${MESSAGE}"
-    if [$BRANCH != $CURRENT_BRANCH]; then
+    if [[ "$BRANCH" != "$CURRENT_BRANCH" ]]; then
         git checkout -b $BRANCH
     fi
     git push origin $BRANCH

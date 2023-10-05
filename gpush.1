@@ -1,0 +1,21 @@
+.TH gpush 1
+.SH NAME
+gpush \- Add, commit and push to git
+.SH SYNOPSIS
+.B gpush
+[ \fB-m\fR \fImessage\fR ]
+[ \fB-b\fR \fIbranch\fR ]
+[ \fB-a\fR \fIpattern\fR ]
+.SH DESCRIPTION
+.B gpush
+can be used to add files that match a pattern, commit with message and push to a branch.
+.SH OPTIONS
+.TP
+\fB-m\fR \fImessage\fR
+Precise the commit message (cf git commit command documentation)
+.TP
+\fB-b\fR \fIbranch\fR
+Define the branch to be pushed (cf git checkout/push command documentation)
+.TP
+\fB-a\fR \fIpattern\fR
+Specify the filename pattern to add files (cf git add command documentation)
