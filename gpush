@@ -1,0 +1,44 @@
+#!/bin/bash
+
+MESSAGE="chore: default commit message"
+BRANCH=""
+CURRENT_BRANCH=$(git branch | awk -F"\*" '{print (NF>1)? $NF : ""}' 2>/dev/null | tr -d ' ')
+ADD_PATTERN="*"
+
+usage() { echo "Usage: $0 [-m <string>] [-a <string>] [-b <string>]" 1>&2; exit 1; }
+
+while getopts ":a:m:b:" o; do
+    case "${o}" in
+        a)
+                ADD_PATTERN=$OPTARG
+                ;;
+        m)
+                MESSAGE=$OPTARG
+                ;;
+        b)
+                BRANCH=$OPTARG
+                ;;
+        *)
+                usage
+                ;;
+    esac
+done
+shift $((OPTIND-1))
+
+# Use current branch
+if [ -z "${BRANCH}" ]; then 
+    BRANCH=$CURRENT_BRANCH
+fi
+
+echo "Pushing files that match '${ADD_PATTERN}' in commit '${MESSAGE}' to branch '${BRANCH}' (y/N)"
+
+read push
+
+if [ $push = "y" ]; then 
+    git add $ADD_PATTERN
+    git commit -m "${MESSAGE}"
+    if [$BRANCH != $CURRENT_BRANCH]; then
+        git checkout -b $BRANCH
+    fi
+    git push origin $BRANCH
+fi
